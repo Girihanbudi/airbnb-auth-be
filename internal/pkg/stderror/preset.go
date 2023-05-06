@@ -1,0 +1,7 @@
+package stderror
+
+var (
+	DEF_SERVER_500 = "DEF_SERVER_500"
+	DEF_AUTH_401   = "DEF_AUTH_401"
+	DEF_DATA_400   = "DEF_DATA_400"
+)
