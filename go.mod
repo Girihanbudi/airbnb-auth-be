@@ -3,7 +3,6 @@ module airbnb-auth-be
 go 1.19
 
 require (
-	github.com/99designs/gqlgen v0.17.25
 	github.com/Shopify/sarama v1.38.1
 	github.com/golang-jwt/jwt/v5 v5.0.0-rc.1
 	github.com/matoous/go-nanoid/v2 v2.0.0
@@ -12,7 +11,6 @@ require (
 	github.com/swaggo/files v1.0.0
 	github.com/swaggo/swag v1.8.1
 	github.com/thoas/go-funk v0.9.3
-	github.com/vektah/gqlparser/v2 v2.5.1
 	golang.org/x/oauth2 v0.6.0
 	google.golang.org/grpc v1.52.0
 )
@@ -23,7 +21,6 @@ require (
 	github.com/KyleBanks/depth v1.2.1 // indirect
 	github.com/PuerkitoBio/purell v1.1.1 // indirect
 	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578 // indirect
-	github.com/agnivade/levenshtein v1.1.1 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/eapache/go-resiliency v1.3.0 // indirect
 	github.com/eapache/go-xerial-snappy v0.0.0-20230111030713-bf00bc1b83b6 // indirect
@@ -34,11 +31,9 @@ require (
 	github.com/go-openapi/swag v0.19.15 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
-	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/hashicorp/errwrap v1.0.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/hashicorp/go-uuid v1.0.3 // indirect
-	github.com/hashicorp/golang-lru/v2 v2.0.1 // indirect
 	github.com/jcmturner/aescts/v2 v2.0.0 // indirect
 	github.com/jcmturner/dnsutils/v2 v2.0.0 // indirect
 	github.com/jcmturner/gofork v1.7.6 // indirect
