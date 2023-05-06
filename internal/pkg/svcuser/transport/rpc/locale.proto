@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package locale;
+
+option go_package = "./rpc";
+
+message Locale {
+  string code = 1;
+  string name = 2;
+  string local = 3;
+  string location = 4;
+  int32 lcid = 5;
+  string iso639_1 = 6;
+  string iso639_2 = 7;
+  google.protobuf.Timestamp createdAt = 8;
+  google.protobuf.Timestamp updatedAt = 9;
+}
+
+message Locales {
+  repeated Locale data = 1;
+}
+
+message GetLocalesCmd {}
+
+
+service LocaleService {
+  rpc GetLocales(GetLocalesCmd) returns (Locales) {}
+}
+

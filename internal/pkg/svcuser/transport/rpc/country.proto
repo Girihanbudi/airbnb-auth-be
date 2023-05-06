@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package country;
+
+option go_package = "./rpc";
+
+message Country {
+  string iso = 1;
+  string iso3 = 2;
+  string name = 3;
+  int32 numCode = 4;
+  int32 phoneCode = 5;
+}
+
+message GetCountryByPhoneCodeCmd {
+  int32 code = 1;
+}
+
+service CountryService {
+  rpc GetCountryByPhoneCode(GetCountryByPhoneCodeCmd) returns (Country) {}
+}
+
