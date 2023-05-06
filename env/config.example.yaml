@@ -1,0 +1,49 @@
+stage:
+origins:
+domain:
+httpserver:
+  host:
+  port:
+db:
+  user:
+  password:
+  name:
+  host:
+  port:
+  sslmode:
+  timezone:
+cache:
+  auth:
+    host:
+    password:
+    db:
+  otp:
+    host:
+    password:
+    db:
+oauth:
+  redirecturl:
+  google:
+    clientid:
+    clientsecret:
+    userinfoapi:
+    redirecturl:
+    scopes:
+  facebook:
+    clientid:
+    clientsecret:
+    userinfoapi:
+    redirecturl:
+jwt:
+  # example using https://generate-secret.now.sh/32
+  secret:
+kafka:
+  clientid:
+  brokers:
+  version:
+  consumer:
+    group:
+    assigner:
+    isuseoldest:
+    router:
+      separator:
