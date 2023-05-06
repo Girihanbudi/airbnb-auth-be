@@ -1,0 +1,132 @@
+basePath: /auth
+definitions:
+  response.ContinueWithPhone:
+    properties:
+      isVerified:
+        type: boolean
+    type: object
+host: localhost/api
+info:
+  contact:
+    email: support@airbnb.co.id
+    name: API Support
+    url: https://airbnb.co.id/support
+  description: Airbnb User Backend Service API
+  termsOfService: https://airbnb.co.id
+  title: Airbnb User Backend API
+  version: "1.0"
+paths:
+  /sessions/facebook:
+    get:
+      responses: {}
+      summary: Get session by using facebook oauth. User will be redirected to facebook
+        sign in page to get credential and redirected back to service if user sign
+        in correctly.
+      tags:
+      - auth
+  /sessions/google:
+    get:
+      responses: {}
+      summary: Get session by using google oauth. User will be redirected to google
+        sign in page to get credential and redirected back to service if user sign
+        in correctly.
+      tags:
+      - auth
+  /sessions/phone/complete:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: OTP
+        in: body
+        name: otp
+        required: true
+        schema:
+          type: string
+      - description: First Name
+        in: body
+        name: firstName
+        required: true
+        schema:
+          type: string
+      - description: Last Name
+        in: body
+        name: lastName
+        schema:
+          type: string
+      - description: Email
+        in: body
+        name: email
+        required: true
+        schema:
+          type: string
+      - description: Date of Birth
+        in: body
+        name: dateOfBirth
+        required: true
+        schema:
+          type: string
+      responses: {}
+      summary: Complete registration using phone number if not verified yet.
+      tags:
+      - auth
+  /sessions/phone/generate:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: OTP
+        in: body
+        name: otp
+        required: true
+        schema:
+          type: string
+      responses: {}
+      summary: Make a session usign phone number if user already verified.
+      tags:
+      - auth
+  /sessions/phone/initial:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Country Code
+        in: body
+        name: countryCode
+        required: true
+        schema:
+          type: integer
+      - description: Phone Number
+        in: body
+        name: phoneNumber
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.ContinueWithPhone'
+      summary: Get session by using user phone number. An OTP code will be sent to
+        user phone.
+      tags:
+      - auth
+  /sessions/refresh:
+    get:
+      responses: {}
+      summary: Rotate access and refresh tokens with a new one after access token
+        expired.
+      tags:
+      - auth
+  /sessions/signout:
+    get:
+      responses: {}
+      summary: Delete user session by removing user access and refresh tokens.
+      tags:
+      - auth
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"
