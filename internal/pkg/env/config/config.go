@@ -7,6 +7,7 @@ import (
 	jwt "airbnb-auth-be/internal/pkg/jwt/config"
 	kafka "airbnb-auth-be/internal/pkg/kafka/config"
 	oauth "airbnb-auth-be/internal/pkg/oauth/config"
+	vcuser "airbnb-auth-be/internal/pkg/svcuser/config"
 )
 
 type Config struct {
@@ -19,4 +20,5 @@ type Config struct {
 	Jwt        jwt.Config        `mapstructure:"jwt"`
 	Cache      cache.Config      `mapstructure:"cache"`
 	Kafka      kafka.Config      `mapstructure:"kafka"`
+	SvcUser    vcuser.Config     `mapstructure:"svcuser"`
 }

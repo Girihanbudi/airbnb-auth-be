@@ -9,6 +9,7 @@ import (
 	kafkarouter "airbnb-auth-be/internal/pkg/kafka/router/config"
 	oauthFacebook "airbnb-auth-be/internal/pkg/oauth/facebook/config"
 	oauthGoogle "airbnb-auth-be/internal/pkg/oauth/google/config"
+	vcuser "airbnb-auth-be/internal/pkg/svcuser/config"
 )
 
 func ExtractServerConfig(config config.Config) httpServer.Config {
@@ -37,4 +38,8 @@ func ExtractKafkaConsumerConfig(config config.Config) kafkaconsumer.Config {
 
 func ExtractKafkaRouterConfig(config config.Config) kafkarouter.Config {
 	return config.Kafka.Consumer.Router
+}
+
+func ExtractServiceUserConfig(config config.Config) vcuser.Config {
+	return config.SvcUser
 }
