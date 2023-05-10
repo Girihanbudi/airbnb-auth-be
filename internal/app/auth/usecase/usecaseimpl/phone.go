@@ -149,11 +149,9 @@ func (u Usecase) CompletePhoneRegistration(ctx *gin.Context, cmd request.Complet
 	user.Email = cmd.Email
 	user.DateOfBirth = timestamppb.New(cmd.ConvertedDateOfBirth())
 	user.Role = userrpc.Role_user.String()
-	if saveUserRes, saveUserErr := u.SvcUser.User.CreateOrUpdateUser(ctx, user); saveUserErr != nil {
+	if _, saveUserErr := u.SvcUser.User.UpdateUser(ctx, user); saveUserErr != nil {
 		err = transutil.TranslateError(ctx, errpreset.DbServiceUnavailable, clientLocale)
 		return
-	} else {
-		user.Id = saveUserRes.Id
 	}
 
 	// Delete old tokens
