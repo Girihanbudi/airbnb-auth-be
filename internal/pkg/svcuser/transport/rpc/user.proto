@@ -14,18 +14,19 @@ enum Role {
 message User {
   string id = 1;
   string firstName = 2;
-  string fullName = 3;
-  string email = 4;
-  int32 countryCode = 5;
-  string phoneNumber = 6;
-  string image = 7;
-  string role = 8;
-  google.protobuf.Timestamp dateOfBirth = 9;
-  google.protobuf.Timestamp createdAt = 10;
-  google.protobuf.Timestamp updatedAt = 11;
-  google.protobuf.Timestamp verifiedAt = 12;
-  google.protobuf.Timestamp deletedAt = 13;
-  UserDefaultSetting defaultSetting = 14;
+  string lastName = 3;
+  string fullName = 4;
+  string email = 5;
+  int32 countryCode = 6;
+  string phoneNumber = 7;
+  string image = 8;
+  string role = 9;
+  google.protobuf.Timestamp dateOfBirth = 10;
+  google.protobuf.Timestamp createdAt = 11;
+  google.protobuf.Timestamp updatedAt = 12;
+  google.protobuf.Timestamp verifiedAt = 13;
+  google.protobuf.Timestamp deletedAt = 14;
+  UserDefaultSetting defaultSetting = 15;
 }
 
 message UserDefaultSetting {
@@ -55,11 +56,13 @@ message CreateUserRes {
   string id = 1;
 }
 
+message Empty {}
+
 service UserService {
   rpc GetUser(GetUserCmd) returns (User) {}
   rpc GetUserByEmail(GetUserByEmailCmd) returns (User) {}
   rpc GetUserByPhone(GetUserByPhoneCmd) returns (User) {}
   rpc CreateUser(User) returns (CreateUserRes) {}
-  rpc CreateOrUpdateUser(User) returns (CreateUserRes) {}
+  rpc UpdateUser(User) returns (Empty) {}
 }
 

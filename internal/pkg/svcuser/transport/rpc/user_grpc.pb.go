@@ -26,7 +26,7 @@ type UserServiceClient interface {
 	GetUserByEmail(ctx context.Context, in *GetUserByEmailCmd, opts ...grpc.CallOption) (*User, error)
 	GetUserByPhone(ctx context.Context, in *GetUserByPhoneCmd, opts ...grpc.CallOption) (*User, error)
 	CreateUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*CreateUserRes, error)
-	CreateOrUpdateUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*CreateUserRes, error)
+	UpdateUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type userServiceClient struct {
@@ -73,9 +73,9 @@ func (c *userServiceClient) CreateUser(ctx context.Context, in *User, opts ...gr
 	return out, nil
 }
 
-func (c *userServiceClient) CreateOrUpdateUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*CreateUserRes, error) {
-	out := new(CreateUserRes)
-	err := c.cc.Invoke(ctx, "/user.UserService/CreateOrUpdateUser", in, out, opts...)
+func (c *userServiceClient) UpdateUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/user.UserService/UpdateUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +90,7 @@ type UserServiceServer interface {
 	GetUserByEmail(context.Context, *GetUserByEmailCmd) (*User, error)
 	GetUserByPhone(context.Context, *GetUserByPhoneCmd) (*User, error)
 	CreateUser(context.Context, *User) (*CreateUserRes, error)
-	CreateOrUpdateUser(context.Context, *User) (*CreateUserRes, error)
+	UpdateUser(context.Context, *User) (*Empty, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -110,8 +110,8 @@ func (UnimplementedUserServiceServer) GetUserByPhone(context.Context, *GetUserBy
 func (UnimplementedUserServiceServer) CreateUser(context.Context, *User) (*CreateUserRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
 }
-func (UnimplementedUserServiceServer) CreateOrUpdateUser(context.Context, *User) (*CreateUserRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateOrUpdateUser not implemented")
+func (UnimplementedUserServiceServer) UpdateUser(context.Context, *User) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 
@@ -198,20 +198,20 @@ func _UserService_CreateUser_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserService_CreateOrUpdateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _UserService_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(User)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServiceServer).CreateOrUpdateUser(ctx, in)
+		return srv.(UserServiceServer).UpdateUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/user.UserService/CreateOrUpdateUser",
+		FullMethod: "/user.UserService/UpdateUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).CreateOrUpdateUser(ctx, req.(*User))
+		return srv.(UserServiceServer).UpdateUser(ctx, req.(*User))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -240,8 +240,8 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _UserService_CreateUser_Handler,
 		},
 		{
-			MethodName: "CreateOrUpdateUser",
-			Handler:    _UserService_CreateOrUpdateUser_Handler,
+			MethodName: "UpdateUser",
+			Handler:    _UserService_UpdateUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
