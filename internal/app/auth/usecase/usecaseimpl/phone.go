@@ -143,6 +143,7 @@ func (u Usecase) CompletePhoneRegistration(ctx *gin.Context, cmd request.Complet
 	}
 
 	// Update user information
+	user.VerifiedAt = timestamppb.Now()
 	user.FirstName = util.Case(cmd.FirstName, util.CaseLower, util.CaseTitle)
 	user.FullName = util.Case(cmd.FirstName+" "+cmd.LastName, util.CaseLower, util.CaseTitle)
 	user.Email = cmd.Email
