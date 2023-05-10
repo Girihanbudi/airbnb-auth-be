@@ -34,12 +34,6 @@ migratedown:
 
 .PHONY: svcusergenerate
 svcusergenerate:
-	protoc --go_out=internal/pkg/svcuser/transport \
-	--go-grpc_out=internal/pkg/svcuser/transport \
-	internal/pkg/svcuser/transport/rpc/user.proto
-	protoc --go_out=internal/pkg/svcuser/transport \
-	--go-grpc_out=internal/pkg/svcuser/transport \
-	internal/pkg/svcuser/transport/rpc/locale.proto
-	protoc --go_out=internal/pkg/svcuser/transport \
-	--go-grpc_out=internal/pkg/svcuser/transport \
-	internal/pkg/svcuser/transport/rpc/country.proto
+	protoc --go-grpc_out=internal/pkg/svcuser/transport --go_out=internal/pkg/svcuser/transport internal/pkg/svcuser/transport/rpc/user.proto
+	protoc --go-grpc_out=internal/pkg/svcuser/transport --go_out=internal/pkg/svcuser/transport internal/pkg/svcuser/transport/rpc/locale.proto
+	protoc --go-grpc_out=internal/pkg/svcuser/transport --go_out=internal/pkg/svcuser/transport internal/pkg/svcuser/transport/rpc/country.proto
