@@ -17,8 +17,14 @@ func (s *Server) Start() error {
 	}
 
 	log.Event(Instance, fmt.Sprintf("listening on %s", s.address))
-	if err := s.server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-		return err
+	if s.PublicCert == "" || s.PrivateKey == "" {
+		if err := s.server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			return err
+		}
+	} else {
+		if err := s.server.ListenAndServeTLS(s.PublicCert, s.PrivateKey); err != nil && err != http.ErrServerClosed {
+			return err
+		}
 	}
 
 	return nil
