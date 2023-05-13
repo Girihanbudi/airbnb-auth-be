@@ -1,6 +1,7 @@
 package svcuser
 
 import (
+	"airbnb-auth-be/internal/pkg/credential"
 	"airbnb-auth-be/internal/pkg/log"
 	"airbnb-auth-be/internal/pkg/svcuser/config"
 	"airbnb-auth-be/internal/pkg/svcuser/transport/rpc"
@@ -13,6 +14,7 @@ const Instance = "User Client"
 
 type Options struct {
 	config.Config
+	Creds credential.TlsCredentials
 }
 
 type Client struct {
@@ -24,9 +26,18 @@ type Client struct {
 }
 
 func NewClient(options Options) *Client {
-	conn, err := grpc.Dial(options.Address, grpc.WithTransportCredentials(insecure.NewCredentials()))
-	if err != nil {
-		log.Fatal(Instance, "connection failed", err)
+	var conn *grpc.ClientConn
+	var err error
+	if options.Creds.Tls != nil {
+		conn, err = grpc.Dial(options.Address, grpc.WithTransportCredentials(*options.Creds.Tls))
+		if err != nil {
+			log.Fatal(Instance, "connection failed", err)
+		}
+	} else {
+		conn, err = grpc.Dial(options.Address, grpc.WithTransportCredentials(insecure.NewCredentials()))
+		if err != nil {
+			log.Fatal(Instance, "connection failed", err)
+		}
 	}
 
 	return &Client{

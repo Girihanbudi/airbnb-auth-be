@@ -16,13 +16,14 @@ func (s *Server) Start() error {
 		Handler: s.Options.Router,
 	}
 
-	log.Event(Instance, fmt.Sprintf("listening on %s", s.address))
-	if s.PublicCert == "" || s.PrivateKey == "" {
+	if s.Creds.Tls == nil {
+		log.Event(Instance, fmt.Sprintf("listening on %s://%s", "http", s.address))
 		if err := s.server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			return err
 		}
 	} else {
-		if err := s.server.ListenAndServeTLS(s.PublicCert, s.PrivateKey); err != nil && err != http.ErrServerClosed {
+		log.Event(Instance, fmt.Sprintf("listening on %s://%s", "https", s.address))
+		if err := s.server.ListenAndServeTLS(s.Creds.PublicCert, s.Creds.PrivateKey); err != nil && err != http.ErrServerClosed {
 			return err
 		}
 	}
