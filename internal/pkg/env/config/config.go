@@ -2,6 +2,7 @@ package config
 
 import (
 	cache "airbnb-auth-be/internal/pkg/cache/config"
+	credential "airbnb-auth-be/internal/pkg/credential/config"
 	gorm "airbnb-auth-be/internal/pkg/gorm/config"
 	httpserver "airbnb-auth-be/internal/pkg/http/server/config"
 	jwt "airbnb-auth-be/internal/pkg/jwt/config"
@@ -14,6 +15,7 @@ type Config struct {
 	Origins    []string          `mapstructure:"origins"`
 	Stage      string            `mapstructure:"stage"`
 	Domain     string            `mapstructure:"domain"`
+	Creds      credential.Config `mapstructure:"creds"`
 	HttpServer httpserver.Config `mapstructure:"httpserver"`
 	DB         gorm.Config       `mapstructure:"db"`
 	Oauth      oauth.Config      `mapstructure:"oauth"`

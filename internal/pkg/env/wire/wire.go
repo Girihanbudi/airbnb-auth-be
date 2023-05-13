@@ -9,6 +9,7 @@ import (
 
 var PackageSet = wire.NewSet(
 	env.ProvideEnv,
+	tool.ExtractCredsConfig,
 	tool.ExtractServerConfig,
 	tool.ExtractDBConfig,
 	tool.ExtractOauthGoogleConfig,

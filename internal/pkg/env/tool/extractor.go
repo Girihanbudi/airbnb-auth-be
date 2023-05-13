@@ -1,6 +1,7 @@
 package tool
 
 import (
+	credential "airbnb-auth-be/internal/pkg/credential/config"
 	"airbnb-auth-be/internal/pkg/env/config"
 	gorm "airbnb-auth-be/internal/pkg/gorm/config"
 	httpServer "airbnb-auth-be/internal/pkg/http/server/config"
@@ -11,6 +12,10 @@ import (
 	oauthGoogle "airbnb-auth-be/internal/pkg/oauth/google/config"
 	vcuser "airbnb-auth-be/internal/pkg/svcuser/config"
 )
+
+func ExtractCredsConfig(config config.Config) credential.Config {
+	return config.Creds
+}
 
 func ExtractServerConfig(config config.Config) httpServer.Config {
 	return config.HttpServer

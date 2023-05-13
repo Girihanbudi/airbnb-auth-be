@@ -11,6 +11,7 @@ import (
 	"airbnb-auth-be/internal/app/auth/api/rest"
 	"airbnb-auth-be/internal/app/auth/usecase/usecaseimpl"
 	"airbnb-auth-be/internal/app/translation/repo/repoimpl"
+	"airbnb-auth-be/internal/pkg/credential"
 	"airbnb-auth-be/internal/pkg/env"
 	"airbnb-auth-be/internal/pkg/env/tool"
 	"airbnb-auth-be/internal/pkg/gorm"
@@ -36,25 +37,31 @@ func NewApp() (*App, error) {
 	config := env.ProvideEnv()
 	configConfig := tool.ExtractServerConfig(config)
 	engine := router.NewRouter()
-	options := server.Options{
+	config2 := tool.ExtractCredsConfig(config)
+	options := credential.Options{
+		Config: config2,
+	}
+	tlsCredentials := credential.NewTLSCredentials(options)
+	serverOptions := server.Options{
 		Config: configConfig,
 		Router: engine,
+		Creds:  tlsCredentials,
 	}
-	serverServer := server.NewServer(options)
-	config2 := tool.ExtractKafkaConsumerConfig(config)
-	config3 := tool.ExtractKafkaConfig(config)
-	config4 := tool.ExtractKafkaRouterConfig(config)
+	serverServer := server.NewServer(serverOptions)
+	config3 := tool.ExtractKafkaConsumerConfig(config)
+	config4 := tool.ExtractKafkaConfig(config)
+	config5 := tool.ExtractKafkaRouterConfig(config)
 	routerOptions := router2.Options{
-		Config: config4,
+		Config: config5,
 	}
 	routerRouter := router2.NewRouter(routerOptions)
 	kafkaOptions := kafka.Options{
-		Config: config3,
+		Config: config4,
 		Router: routerRouter,
 	}
 	client := kafka.NewSaramaClient(kafkaOptions)
 	consumerOptions := consumer.Options{
-		Config: config2,
+		Config: config3,
 		Client: client,
 		Router: routerRouter,
 	}
@@ -63,28 +70,29 @@ func NewApp() (*App, error) {
 		Client: client,
 	}
 	producerProducer := producer.NewEventProducer(producerOptions)
-	config5 := tool.ExtractServiceUserConfig(config)
+	config6 := tool.ExtractServiceUserConfig(config)
 	svcuserOptions := svcuser.Options{
-		Config: config5,
+		Config: config6,
+		Creds:  tlsCredentials,
 	}
 	svcuserClient := svcuser.NewClient(svcuserOptions)
-	config6 := tool.ExtractDBConfig(config)
+	config7 := tool.ExtractDBConfig(config)
 	gormOptions := gorm.Options{
-		Config: config6,
+		Config: config7,
 	}
 	gormEngine := gorm.NewORM(gormOptions)
 	repoimplOptions := repoimpl.Options{
 		Gorm: gormEngine,
 	}
 	repo := repoimpl.NewTranslationRepo(repoimplOptions)
-	config7 := tool.ExtractOauthGoogleConfig(config)
+	config8 := tool.ExtractOauthGoogleConfig(config)
 	googleOptions := google.Options{
-		Config: config7,
+		Config: config8,
 	}
 	oauth := google.NewGoogleOauth(googleOptions)
-	config8 := tool.ExtractOauthFacebookConfig(config)
+	config9 := tool.ExtractOauthFacebookConfig(config)
 	facebookOptions := facebook.Options{
-		Config: config8,
+		Config: config9,
 	}
 	facebookOauth := facebook.NewFacebookOauth(facebookOptions)
 	options2 := repoimpl2.Options{

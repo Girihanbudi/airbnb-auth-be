@@ -4,6 +4,7 @@
 package app
 
 import (
+	creds "airbnb-auth-be/internal/pkg/credential/wire"
 	env "airbnb-auth-be/internal/pkg/env/wire"
 	gorm "airbnb-auth-be/internal/pkg/gorm/wire"
 	http "airbnb-auth-be/internal/pkg/http/server/wire"
@@ -28,6 +29,7 @@ func NewApp() (*App, error) {
 	panic(
 		wire.Build(
 			env.PackageSet,
+			creds.PackageSet,
 			gorm.PackageSet,
 			http.PackageSet,
 			kafka.PackageSet,
