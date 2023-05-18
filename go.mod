@@ -4,6 +4,7 @@ go 1.19
 
 require (
 	github.com/Shopify/sarama v1.38.1
+	github.com/elastic/go-elasticsearch/v7 v7.17.10
 	github.com/golang-jwt/jwt/v5 v5.0.0-rc.1
 	github.com/matoous/go-nanoid/v2 v2.0.0
 	github.com/mgutz/ansi v0.0.0-20200706080929-d51e80ef957d
