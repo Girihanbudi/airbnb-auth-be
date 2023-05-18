@@ -1,8 +1,6 @@
 stage:
 origins:
 domain:
-mock:
-  otp:
 creds:
   privatekey:
   publiccert:
@@ -17,6 +15,9 @@ db:
   port:
   sslmode:
   timezone:
+jwt:
+  # example using https://generate-secret.now.sh/32
+  secret:
 cache:
   auth:
     host:
@@ -26,6 +27,23 @@ cache:
     host:
     password:
     db:
+elastic:
+  addresses:
+  username:
+  password:
+  separator:
+kafka:
+  clientid:
+  brokers:
+  version:
+  consumer:
+    group:
+    assigner:
+    isuseoldest:
+    router:
+      separator:
+svcuser:
+  address:
 oauth:
   redirecturl:
   google:
@@ -40,23 +58,3 @@ oauth:
     userinfoapi:
     redirecturl:
     scopes:
-jwt:
-  # example using https://generate-secret.now.sh/32
-  secret:
-kafka:
-  clientid:
-  brokers:
-  version:
-  consumer:
-    group:
-    assigner:
-    isuseoldest:
-    router:
-      separator:
-elastic:
-  addresses:
-  username:
-  password:
-  separator:
-svcuser:
-  address:

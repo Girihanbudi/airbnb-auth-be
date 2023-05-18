@@ -13,16 +13,16 @@ import (
 )
 
 type Config struct {
-	Origins    []string          `mapstructure:"origins"`
 	Stage      string            `mapstructure:"stage"`
+	Origins    []string          `mapstructure:"origins"`
 	Domain     string            `mapstructure:"domain"`
 	Creds      credential.Config `mapstructure:"creds"`
 	HttpServer httpserver.Config `mapstructure:"httpserver"`
 	DB         gorm.Config       `mapstructure:"db"`
-	Oauth      oauth.Config      `mapstructure:"oauth"`
 	Jwt        jwt.Config        `mapstructure:"jwt"`
 	Cache      cache.Config      `mapstructure:"cache"`
+	Elastic    elastic.Config    `mapstructure:"elastic"`
 	Kafka      kafka.Config      `mapstructure:"kafka"`
 	SvcUser    svcuser.Config    `mapstructure:"svcuser"`
-	Elastic    elastic.Config    `mapstructure:"elastic"`
+	Oauth      oauth.Config      `mapstructure:"oauth"`
 }
