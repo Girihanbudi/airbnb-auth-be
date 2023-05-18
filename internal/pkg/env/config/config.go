@@ -3,6 +3,7 @@ package config
 import (
 	cache "airbnb-auth-be/internal/pkg/cache/config"
 	credential "airbnb-auth-be/internal/pkg/credential/config"
+	elastic "airbnb-auth-be/internal/pkg/elasticsearch/config"
 	gorm "airbnb-auth-be/internal/pkg/gorm/config"
 	httpserver "airbnb-auth-be/internal/pkg/http/server/config"
 	jwt "airbnb-auth-be/internal/pkg/jwt/config"
@@ -23,4 +24,5 @@ type Config struct {
 	Cache      cache.Config      `mapstructure:"cache"`
 	Kafka      kafka.Config      `mapstructure:"kafka"`
 	SvcUser    svcuser.Config    `mapstructure:"svcuser"`
+	Elastic    elastic.Config    `mapstructure:"elastic"`
 }
