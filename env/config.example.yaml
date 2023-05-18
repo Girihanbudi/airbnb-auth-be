@@ -1,6 +1,11 @@
 stage:
 origins:
 domain:
+mock:
+  otp:
+creds:
+  privatekey:
+  publiccert:
 httpserver:
   host:
   port:
@@ -34,6 +39,7 @@ oauth:
     clientsecret:
     userinfoapi:
     redirecturl:
+    scopes:
 jwt:
   # example using https://generate-secret.now.sh/32
   secret:
@@ -47,3 +53,10 @@ kafka:
     isuseoldest:
     router:
       separator:
+elastic:
+  addresses:
+  username:
+  password:
+  separator:
+svcuser:
+  address:
