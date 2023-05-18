@@ -1,8 +1,10 @@
 package app
 
 import (
+	elasticmid "airbnb-auth-be/internal/app/middleware/elastic"
 	"airbnb-auth-be/internal/pkg/cache/auth"
 	"airbnb-auth-be/internal/pkg/cache/otp"
+	elastic "airbnb-auth-be/internal/pkg/elasticsearch"
 	"airbnb-auth-be/internal/pkg/http/server"
 	httprouter "airbnb-auth-be/internal/pkg/http/server/router"
 	kafkaconsumer "airbnb-auth-be/internal/pkg/kafka/consumer"
@@ -17,6 +19,7 @@ import (
 	authrest "airbnb-auth-be/internal/app/auth/api/rest"
 	authmid "airbnb-auth-be/internal/app/middleware/auth"
 	cookiemid "airbnb-auth-be/internal/app/middleware/cookie"
+
 	translation "airbnb-auth-be/internal/app/translation/repo"
 )
 
@@ -49,11 +52,20 @@ func (a App) runModules(ctx context.Context) {
 	auth.InitAuthCache()
 	otp.InitOtpCache()
 
+	// Init elasticsearch client
+	elastic.InitElasticSearch()
+
+	// Create required index in elastic
+	elasticmid.CreateIndex()
+
 	// recover from panic
 	a.HttpServer.Router.Use(gin.Recovery())
 
 	// GIN apply CORS setting
 	a.HttpServer.Router.Use(httprouter.DefaultCORSSetting())
+
+	// GIN log request and response to elastic
+	a.HttpServer.Router.Use(elasticmid.LogRequestToElastic())
 
 	// GIN bind all cookie
 	a.HttpServer.Router.Use(cookiemid.BindAll())
