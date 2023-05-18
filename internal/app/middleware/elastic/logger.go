@@ -62,12 +62,11 @@ func LogRequestToElastic() gin.HandlerFunc {
 			}
 
 			res, err := elastic.CreateDocument(id, body, indexName...)
-			if err != nil {
+			if err != nil || res.IsError() {
 				msg := fmt.Sprintf("error indexing for document id=%s", id)
 				log.Error(Instance, msg, fmt.Errorf("%v", res))
 				return
 			}
-			fmt.Println("res", res)
 		}()
 	}
 }
