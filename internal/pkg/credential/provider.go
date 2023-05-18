@@ -2,9 +2,8 @@ package credential
 
 import (
 	"airbnb-auth-be/internal/pkg/credential/config"
+	"airbnb-auth-be/internal/pkg/env"
 	"crypto/tls"
-
-	"google.golang.org/grpc/credentials"
 )
 
 type Options struct {
@@ -13,7 +12,8 @@ type Options struct {
 
 type TlsCredentials struct {
 	Options
-	Tls *credentials.TransportCredentials
+	TlsCerts  *[]tls.Certificate
+	TlsConfig *tls.Config
 }
 
 func NewTLSCredentials(options Options) (creds TlsCredentials) {
@@ -28,10 +28,16 @@ func NewTLSCredentials(options Options) (creds TlsCredentials) {
 	// Create the credentials and return it
 	config := &tls.Config{
 		Certificates: []tls.Certificate{serverCert},
-		ClientAuth:   tls.NoClientCert,
 	}
-	tls := credentials.NewTLS(config)
-	creds.Tls = &tls
+	if env.CONFIG.Stage == string(env.StageLocal) {
+		config.ClientAuth = tls.NoClientCert
+	} else {
+		config.ClientAuth = tls.RequireAndVerifyClientCert
+	}
+
+	tlsCerts := []tls.Certificate{serverCert}
+	creds.TlsCerts = &tlsCerts
+	creds.TlsConfig = config
 
 	return creds
 }

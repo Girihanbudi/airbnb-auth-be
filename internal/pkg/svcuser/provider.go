@@ -7,6 +7,7 @@ import (
 	"airbnb-auth-be/internal/pkg/svcuser/transport/rpc"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/credentials/insecure"
 )
 
@@ -28,8 +29,9 @@ type Client struct {
 func NewClient(options Options) *Client {
 	var conn *grpc.ClientConn
 	var err error
-	if options.Creds.Tls != nil {
-		conn, err = grpc.Dial(options.Address, grpc.WithTransportCredentials(*options.Creds.Tls))
+	if options.Creds.TlsCerts != nil {
+		tls := credentials.NewTLS(options.Creds.TlsConfig)
+		conn, err = grpc.Dial(options.Address, grpc.WithTransportCredentials(tls))
 		if err != nil {
 			log.Fatal(Instance, "connection failed", err)
 		}
