@@ -9,7 +9,6 @@ import (
 
 func (s *Server) Start() error {
 	log.Event(Instance, "starting server...")
-	s.address = fmt.Sprintf("%s:%s", s.Host, s.Port)
 
 	s.server = &http.Server{
 		Addr:    s.address,
