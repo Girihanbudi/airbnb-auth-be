@@ -10,7 +10,6 @@ import (
 	"airbnb-auth-be/internal/pkg/json"
 	msgpreset "airbnb-auth-be/internal/pkg/messaging/preset"
 	"airbnb-auth-be/internal/pkg/stderror"
-	"airbnb-auth-be/internal/pkg/svcuser/transport/rpc"
 	userrpc "airbnb-auth-be/internal/pkg/svcuser/transport/rpc"
 	"airbnb-auth-be/internal/pkg/util"
 	"errors"
@@ -32,7 +31,7 @@ func (u Usecase) ContinueWithPhone(ctx *gin.Context, cmd request.ContinueWithPho
 	}
 
 	// Get country using request phone code
-	getCountryCmd := rpc.GetCountryByPhoneCodeCmd{Code: int32(cmd.CountryCode)}
+	getCountryCmd := userrpc.GetCountryByPhoneCodeCmd{Code: int32(cmd.CountryCode)}
 	if _, getCountryErr := u.SvcUser.Country.GetCountryByPhoneCode(ctx, &getCountryCmd); getCountryErr != nil {
 		ec := errpreset.DbServiceUnavailable
 		if errors.Is(getCountryErr, gorm.ErrRecordNotFound) {
