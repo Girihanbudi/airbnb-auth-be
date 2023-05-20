@@ -42,7 +42,7 @@ func (u Usecase) ContinueWithPhone(ctx *gin.Context, cmd request.ContinueWithPho
 		return
 	}
 
-	var user *rpc.User
+	user := &userrpc.User{}
 
 	// Update or create user if not exist
 	getUserCmd := userrpc.GetUserByPhoneCmd{

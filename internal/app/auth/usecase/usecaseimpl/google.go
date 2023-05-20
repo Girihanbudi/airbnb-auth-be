@@ -62,11 +62,11 @@ func (u Usecase) OauthGoogleCallback(ctx *gin.Context) (err *stderror.StdError) 
 		return
 	}
 
-	var user *userrpc.User
+	user := &userrpc.User{}
 
 	// Update or create user if not exist
 	getUserCmd := userrpc.GetUserByEmailCmd{Email: data.Email}
-	if recordUser, getUserErr := u.SvcUser.User.GetUserByEmail(ctx, &getUserCmd); getUserErr != nil {
+	if recordUser, getUserErr := u.SvcUser.User.GetUserByEmail(ctx, &getUserCmd); getUserErr != nil || recordUser == nil {
 		currentTime := time.Now()
 		user.FirstName = util.Case(data.GivenName, util.CaseLower, util.CaseTitle)
 		user.FullName = util.Case(data.Name, util.CaseLower, util.CaseTitle)

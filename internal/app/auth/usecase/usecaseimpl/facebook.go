@@ -62,7 +62,7 @@ func (u Usecase) OauthFacebookCallback(ctx *gin.Context) (err *stderror.StdError
 		return
 	}
 
-	var user *userrpc.User
+	user := &userrpc.User{}
 
 	// Update or create user if not exist
 	getUserCmd := userrpc.GetUserByEmailCmd{Email: data.Email}
