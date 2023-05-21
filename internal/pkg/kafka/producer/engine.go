@@ -8,13 +8,14 @@ import (
 	"github.com/Shopify/sarama"
 )
 
-func (p *Producer) Stop() error {
+func (p *Producer) Stop() {
 	log.Event(Instance, "shutting down event producer...")
+
 	if err := p.Collector.Close(); err != nil {
-		log.Error(Instance, "failed to shut down data collector cleanly", err)
+		log.Error(Instance, "failed to shutting down event producer", err)
 	}
 
-	return nil
+	log.Event(Instance, "event producer has been shutted down")
 }
 
 func (p *Producer) ProduceMessage(topic string, value interface{}) (partition int32, offset int64, err error) {

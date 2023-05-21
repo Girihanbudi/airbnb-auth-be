@@ -11,15 +11,15 @@ import (
 
 // ref https://github.com/Shopify/sarama/blob/main/examples/consumergroup/main.go
 
-func (l *Listener) Start(ctx context.Context) error {
+func (l *Listener) Start(ctx context.Context) {
+	log.Event(Instance, "starting event listener...")
+
 	var topics []string
 	if len(l.Router.Handlers) > 0 {
 		topics = funk.Map(l.Router.Handlers, func(handler router.Handler) string {
 			return handler.Topic
 		}).([]string)
 	}
-
-	log.Event(Instance, "starting listener...")
 
 	go func() {
 		for {
@@ -38,14 +38,16 @@ func (l *Listener) Start(ctx context.Context) error {
 	}()
 
 	<-l.isReady // Await till the consumer has been set up
-	log.Event(Instance, "sarama listener up and running")
-
-	return nil
+	log.Event(Instance, "event listener up and running")
 }
 
-func (l *Listener) Stop() error {
+func (l *Listener) Stop() {
 	log.Event(Instance, "shutting down event listener...")
-	return l.Consumer.Close()
+	if err := l.Consumer.Close(); err != nil {
+		log.Fatal(Instance, "failed to shutting down event listener", err)
+	}
+
+	log.Event(Instance, "event listener has been shutted down")
 }
 
 // Setup is run at the beginning of a new session, before ConsumeClaim
