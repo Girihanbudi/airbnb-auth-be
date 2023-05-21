@@ -15,20 +15,17 @@ func (s *Server) Start() {
 		Handler: s.Options.Router,
 	}
 
-	var scheme string
 	if s.Creds.TlsCerts == nil {
-		scheme = "http"
+		log.Event(Instance, fmt.Sprintf("listening on %s://%s", "http", s.address))
 		if err := s.server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Fatal(Instance, "failed to start http server", err)
 		}
 	} else {
-		scheme = "https"
+		log.Event(Instance, fmt.Sprintf("listening on %s://%s", "https", s.address))
 		if err := s.server.ListenAndServeTLS(s.Creds.PublicCert, s.Creds.PrivateKey); err != nil && err != http.ErrServerClosed {
 			log.Fatal(Instance, "failed to start http server", err)
 		}
 	}
-
-	log.Event(Instance, fmt.Sprintf("listening on %s://%s", scheme, s.address))
 }
 
 func (s *Server) Stop() {
