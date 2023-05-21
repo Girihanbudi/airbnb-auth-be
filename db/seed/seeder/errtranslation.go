@@ -53,6 +53,7 @@ func SeedErrTranslation(db gorm.DB) error {
 		MakeErrTranslation(autherr.TknGenerateFailed, "en", http.StatusInternalServerError, "Failed to generate token"),
 		MakeErrTranslation(autherr.TknStoreFailed, "en", http.StatusServiceUnavailable, "Failed to communicate with cache server"),
 		MakeErrTranslation(autherr.EvtSendMsgFailed, "en", http.StatusServiceUnavailable, "Failed to communicate with broker"),
+		MakeErrTranslation(autherr.RpcServiceError, "en", http.StatusServiceUnavailable, "Failed to communicate with service"),
 		// Id translation
 		MakeErrTranslation(autherr.DbServiceUnavailable, "id", http.StatusServiceUnavailable, "Gagal berkomunikasi dengan server penyimpanan"),
 		MakeErrTranslation(autherr.DbRecordNotFound, "id", http.StatusNotFound, "Data tidak ditemukan"),
@@ -65,6 +66,7 @@ func SeedErrTranslation(db gorm.DB) error {
 		MakeErrTranslation(autherr.TknGenerateFailed, "id", http.StatusInternalServerError, "Gagal membuat token"),
 		MakeErrTranslation(autherr.TknStoreFailed, "id", http.StatusServiceUnavailable, "Gagal berkomunikasi dengan cache server"),
 		MakeErrTranslation(autherr.EvtSendMsgFailed, "id", http.StatusServiceUnavailable, "Gagal berkomunikasi dengan broker"),
+		MakeErrTranslation(autherr.RpcServiceError, "id", http.StatusServiceUnavailable, "Gagal berkomunikasi dengan service"),
 	}
 
 	var errTranslationRecords []translationmodule.ErrTranslation
