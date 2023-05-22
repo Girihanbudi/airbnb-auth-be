@@ -16,4 +16,6 @@ const (
 	TknInvalid        = "AUTH_TKN_003"
 
 	EvtSendMsgFailed = "AUTH_EVT_001"
+
+	RpcServiceError = "AUTH_RPC_001"
 )
