@@ -10,7 +10,7 @@ const (
 	ProviderFacebook
 )
 
-var keys = []string{"email", "phone", "google", "facebook"}
+var keys = []string{"Email", "Phone", "Google", "Facebook"}
 var providers = []Provider{ProviderEmail, ProviderPhone, ProviderGoogle, ProviderFacebook}
 
 func (m Provider) String() string {
