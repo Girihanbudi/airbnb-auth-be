@@ -8,7 +8,9 @@ import (
 )
 
 func (a App) registerHttpHandler() {
-	// register auth handler
+	// Register rest handler
 	a.AuthHandler.RegisterApi()
+
+	// Register swagger documentation
 	a.HttpServer.Router.GET("/docs/*any", ginswagger.WrapHandler(swaggerfiles.Handler))
 }
